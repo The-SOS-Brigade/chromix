@@ -1,0 +1,8 @@
+services:
+  builder:
+    image: ubuntu:latest
+    command: ./build.sh
+    working_dir: /chromix
+    privileged: true
+    volumes:
+      - ./:/chromix
