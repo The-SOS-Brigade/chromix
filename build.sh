@@ -17,13 +17,13 @@ printf "n\np\n1\n2048\n\na\nw\n" | fdisk $drive
 loopdev=$(losetup -f)
 losetup -o2048 $loopdev $drive
 mkfs.ext4 $loopdev
-mount -t ext4 $loopdev mnt
+mount -t ext4 $loopdev ./mnt/
 
-debootstrap $release ./mnt $distro
-cd mnt
-mkdir -p boot/extlinux
-extlinux -i boot/extlinux
+debootstrap $release ./mnt/ $distro
+cd ./mnt/
+mkdir -p ./boot/extlinux/
+extlinux -i ./boot/extlinux/
 
 losetup -d $loopdev
 
-echo System ready.
+echo done
