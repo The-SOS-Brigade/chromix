@@ -11,11 +11,24 @@
 ---
 
 - Google Chrome
-- 1 browser : 1 partition
 - Microsoft Edge
-- Desktop signin : Browser signin
 - Browser + packages updates
--
 - debian distro update
+- website
+- bash init script
+- installation readme
+- USB stick formatter
+- Desktop signin : Browser signin
+- min, max, resize : OS control
+- JS file explorer
+- apps/PWA support
+- Browser flags
+- 1 browser : 1 partition
+- screenshot tool
+- recording/streaming tool
+- hotkeys
+- hardware database
+- monolithic kernel
 - encrypted partition booting
 - killswitch
+- bootstrap project itself
