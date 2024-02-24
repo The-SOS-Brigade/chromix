@@ -1,6 +1,6 @@
 services:
   builder:
-    image: ubuntu:latest
+    image: debian:bookworm
     command: ./build.sh
     working_dir: /chromix
     privileged: true
