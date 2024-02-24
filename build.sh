@@ -1,42 +1,45 @@
 #!/bin/bash
 set -e
 
-drive="./drive"
-distro="http://deb.debian.org/debian/"
+dir="./dist"
+rm -fr $dir
+mkdir -p $dir
+drive="${dir}/drive"
+base_repo="http://deb.debian.org/debian/"
 release="stable"
 
 apt update
 apt install debootstrap extlinux fdisk -y
 
-rm -rf ./mnt/
-mkdir ./mnt/
+mkdir $dir/mnt/
 
-truncate -s 4G $drive
-printf "n\np\n1\n2048\n\na\nw\n" | fdisk $drive
+truncate -s 4G $dir/drive
+printf "n\np\n1\n2048\n\na\nw\n" | fdisk $dir/drive
 
 loopdev=$(losetup -f)
 losetup -o1048576 $loopdev $drive
 mkfs.ext4 $loopdev
-mount -t ext4 $loopdev mnt
+mount -t ext4 $loopdev $dir/mnt/
 
-debootstrap $release ./mnt $distro
-mkdir -p ./mnt/boot/extlinux
-extlinux -i ./mnt/boot/extlinux
-cp extlinux.conf ./mnt/boot/extlinux
+debootstrap $release $dir/mnt $base_repo
+mkdir -p $dir/mnt/boot/extlinux
+extlinux -i $dir/mnt/boot/extlinux
+cp extlinux.conf $dir/mnt/boot/extlinux
 
-mount --make-rslave --rbind /proc ./mnt/proc
-mount --make-rslave --rbind /sys ./mnt/sys
-mount --make-rslave --rbind /dev ./mnt/dev
-mount --make-rslave --rbind /run ./mnt/run
-cp chroot.sh ./mnt
-chmod +x ./mnt/chroot.sh
-chroot ./mnt "/chroot.sh"
+mount --make-rslave --rbind /proc $dir/mnt/proc
+mount --make-rslave --rbind /sys $dir/mnt/sys
+mount --make-rslave --rbind /dev $dir/mnt/dev
+mount --make-rslave --rbind /run $dir/mnt/run
+cp chroot.sh $dir/mnt
+chmod +x $dir/mnt/chroot.sh
+chroot $dir/mnt "/chroot.sh"
 
 sync
 
 losetup -d $loopdev
 
 # haruhi mbr btw
-dd bs=440 count=1 conv=notrunc if=./mbr.bin of=$drive 
+dd bs=440 count=1 conv=notrunc if=./mbr.bin of=$drive
 
-echo System ready.
+echo Done
+
