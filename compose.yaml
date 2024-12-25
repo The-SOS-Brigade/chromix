@@ -6,3 +6,4 @@ services:
     privileged: true
     volumes:
       - ./:/chromix
+    platform: linux/amd64
