@@ -27,7 +27,7 @@ apt install linux-image-6.1.0-25-amd64 network-manager console-setup console-set
 cat > ~/.xinitrc << EOF
 #!/bin/bash
 mwm &
-chromium --no-sandboxmwm &
+chromium --no-sandboxmwm 
 EOF
 
 chmod +x ~/.xinitrc
