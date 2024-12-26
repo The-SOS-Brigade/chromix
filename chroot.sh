@@ -22,11 +22,12 @@ EOF
 apt update
 apt install linux-image-6.1.0-25-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium mwm -y
+    x11-xkb-utils x11-utils xinit chromium mwm wmctrl -y
 
 cat > ~/.xinitrc << EOF
 #!/bin/bash
-exec chromium --no-sandbox
+mwm &
+chromium --no-sandboxmwm &
 EOF
 
 chmod +x ~/.xinitrc
