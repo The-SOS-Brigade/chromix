@@ -20,14 +20,14 @@ deb-src https://deb.debian.org/debian/ bookworm-updates main contrib non-free no
 EOF
 
 apt update
-apt install linux-image-6.1.0-25-amd64 network-manager console-setup console-setup-linux pciutils \
+apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium mwm wmctrl -y
+    x11-xkb-utils x11-utils xinit chromium mwm wmctrl netctl dhcpd neovim -y
 
 cat > ~/.xinitrc << EOF
 #!/bin/bash
 mwm &
-chromium --no-sandboxmwm 
+chromium --no-sandbox 
 EOF
 
 chmod +x ~/.xinitrc
