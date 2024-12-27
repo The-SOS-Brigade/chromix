@@ -30,6 +30,12 @@ mwm &
 chromium --no-sandbox
 EOF
 
+cat > ~/.mwmrc << EOF
+#!/bin/bash
+Client*defaultMaximized: True
+Client*clientDecoration: none
+EOF
+
 chmod +x ~/.xinitrc
 
 cat > /etc/resolv.conf << EOF
