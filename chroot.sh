@@ -36,8 +36,13 @@ Client*defaultMaximized: True
 Client*clientDecoration: none
 EOF
 
-chmod +x ~/.xinitrc
+cat > ~/.bashrc << EOF
+#!/bin/bash
+startx
 
+chmod +x ~/.xinitrc
+chmod +x ~/.mwmrc
+chmod +x ~/.bashrc
 cat > /etc/resolv.conf << EOF
 nameserver 8.8.8.8
 nameserver 10.0.2.3
