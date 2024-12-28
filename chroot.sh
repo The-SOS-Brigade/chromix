@@ -30,6 +30,8 @@ mwm &
 chromium --no-sandbox
 EOF
 
+chown root:root .Xauthority 
+
 cat > ~/.mwmrc << EOF
 #!/bin/bash
 Client*defaultMaximized: True
@@ -43,6 +45,9 @@ startx
 chmod +x ~/.xinitrc
 chmod +x ~/.mwmrc
 chmod +x ~/.bashrc
+
+EOF
+
 cat > /etc/resolv.conf << EOF
 nameserver 8.8.8.8
 nameserver 10.0.2.3
