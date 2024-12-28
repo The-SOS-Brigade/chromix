@@ -26,7 +26,7 @@ apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-set
 
 cat > ~/.xinitrc << EOF
 #!/bin/bash
-twm &
+openbox &
 chromium --no-sandbox
 EOF
 
