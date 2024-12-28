@@ -22,21 +22,15 @@ EOF
 apt update
 apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium mwm wmctrl netctl dhcpd neovim -y
+    x11-xkb-utils x11-utils xinit chromium twm wmctrl netctl dhcpd neovim -y
 
 cat > ~/.xinitrc << EOF
 #!/bin/bash
-mwm &
+twm &
 chromium --no-sandbox
 EOF
 
 chown root:root .Xauthority 
-
-cat > ~/.mwmrc << EOF
-#!/bin/bash
-Client*defaultMaximized: True
-Client*clientDecoration: none
-EOF
 
 cat > ~/.bashrc << EOF
 #!/bin/bash
