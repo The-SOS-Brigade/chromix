@@ -22,12 +22,15 @@ EOF
 apt update
 apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium openbox wmctrl netctl dhcpd neovim xfonts-terminus -y
+    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim nitrogen git rox-filer -y
+
+git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 
 cat > ~/.xinitrc << EOF
 #!/bin/bash
 openbox &
-chromium --no-sandbox
+chromium --no-sandbox --start-maximized &
+nitrogen --set-zoom-fill /arch-minimal-wallpapers/wallpapers/hd/dracula.png
 EOF
 
 cat > ~/.bashrc << EOF
@@ -36,8 +39,6 @@ startx
 
 chmod +x ~/.xinitrc
 chmod +x ~/.bashrc
-chmod +x ~/.twmrc
-
 EOF
 
 cat > /etc/resolv.conf << EOF
