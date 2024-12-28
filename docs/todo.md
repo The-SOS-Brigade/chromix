@@ -2,10 +2,10 @@
 2. `git` repo ✅
 3. hypervisor ✅
 4. kernel ✅
-5. bootloader
-6. Debian
-7. Chromium
-8. Laptop install
+5. bootloader ✅
+6. Debian ✅
+7. Chromium ✅
+8. Laptop install 
 9. JS tty
 
 ---
@@ -32,3 +32,4 @@
 - encrypted partition booting
 - killswitch
 - bootstrap project itself
+- A nice DE and hide as much of linux as possible.
