@@ -29,8 +29,6 @@ systemctl start lightdm
 
 git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 
-mkdir /etc/xdg/openbox/autostart
-
 cat > /etc/xdg/openbox/autostart << EOF
 ~/chrome-shutdown.sh
 EOF
