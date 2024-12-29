@@ -22,146 +22,15 @@ EOF
 apt update
 apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim nitrogen git rox-filer lxpanel -y
+    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm-gtk-greeter lightdm -y
+
+systemctl enable lightdm
+systemctl start lightdm
 
 git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 
-cat > ~/.xinitrc << EOF
-#!/bin/bash
-openbox &
-nitrogen --set-zoom-fill /arch-minimal-wallpapers/wallpapers/hd/dracula.png &
-chromium --no-sandbox --start-maximized &
-lxpanel
-EOF
-
-cat > ~/.config/lxpanel/default/panels/panel << EOF
-
-Global {
-  edge=bottom
-  allign=left
-  margin=0
-  widthtype=percent
-  width=100
-  height=26
-  transparent=0
-  tintcolor=#000000
-  alpha=0
-  setdocktype=1
-  setpartialstrut=1
-  usefontcolor=1
-  fontcolor=#ffffff
-  usefontsize=0
-  fontsize=10
-  background=1
-  backgroundfile=/usr/share/lxpanel/images/background.png
-}
-Plugin {
-  type=space
-  Config {
-    Size=2
-  }
-}
-Plugin {
-  type=menu
-  Config {
-    image=/usr/share/lxpanel/images/my-computer.png
-    system {
-    }
-    separator {
-    }
-    item {
-      command=run
-    }
-    separator {
-    }
-    item {
-      image=gnome-logout
-      command=logout
-    }
-  }
-}
-Plugin {
-  type=space
-  Config {
-    Size=4
-  }
-}
-Plugin {
-  type=wincmd
-  Config {
-    Button1=iconify
-    Button2=shade
-  }
-}
-Plugin {
-  type=launchbar
-  Config {
-    Button {
-      id=chromium.desktop
-    }
-    Button {
-      id=rox-filer.desktop
-    }
-    Button {
-      id=zutty.desktop
-    }
-  }
-}
-Plugin {
-  type=space
-  Config {
-    Size=4
-  }
-}
-Plugin {
-  type=pager
-  Config {
-  }
-}
-Plugin {
-  type=space
-  Config {
-    Size=4
-  }
-}
-Plugin {
-  type=taskbar
-  expand=1
-  Config {
-    tooltips=1
-    IconsOnly=0
-    AcceptSkipPager=1
-    ShowIconified=1
-    ShowMapped=1
-    ShowAllDesks=0
-    UseMouseWheel=1
-    UseUrgencyHint=1
-    FlatButton=0
-    MaxTaskWidth=150
-    spacing=1
-  }
-}
-Plugin {
-  type=cpu
-  Config {
-  }
-}
-Plugin {
-  type=tray
-  Config {
-  }
-}
-Plugin {
-  type=dclock
-  Config {
-    ClockFmt=%R
-    TooltipFmt=%A %x
-    BoldFont=0
-    IconOnly=0
-    CenterText=0
-  }
-}
-
+cat > /etc/xdg/openbox/autostart << EOF
+chromium --no-sandbox --start-maximized
 EOF
 
 cat > /usr/share/applications/chromium-browser.desktop << EOF
