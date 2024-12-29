@@ -309,6 +309,12 @@ Keywords=browser
 
 EOF
 
+mv chromium chromium.setaside
+cd
+mkdir -p ~/.config/chromium/Default
+echo "{"custom_chrome_frame":true}" > /usr/home/grahamperrin/.config/chromium/Default/Preferences
+chrome
+
 cat > /etc/resolv.conf << EOF
 nameserver 8.8.8.8
 nameserver 10.0.2.3
