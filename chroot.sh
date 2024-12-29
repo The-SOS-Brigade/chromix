@@ -29,8 +29,15 @@ systemctl start lightdm
 
 git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 
+cat > ~/chrome-shutdown.sh << EOF
+
+chromium --no-sandbox --start-maximized &
+shutdown -h now
+
+EOF
+
 cat > /etc/xdg/openbox/autostart << EOF
-~/chrome-shutdown.sh
+~/chrome-shutdown.sh &
 EOF
 
 cat > /usr/share/applications/chromium-browser.desktop << EOF
@@ -175,13 +182,6 @@ MimeType=text/html;text/xml;application/xhtml_xml;application/x-mimearchive;x-sc
 StartupWMClass=chromium
 StartupNotify=true
 Keywords=browser
-
-EOF
-
-cat > ~/chrome-shutdown.sh << EOF
-
-chromium --no-sandbox --start-maximized &
-shutdown -h now
 
 EOF
 
