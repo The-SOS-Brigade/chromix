@@ -30,7 +30,7 @@ cat > ~/.xinitrc << EOF
 #!/bin/bash
 openbox &
 nitrogen --set-zoom-fill /arch-minimal-wallpapers/wallpapers/hd/dracula.png &
-chromium --no-sandbox --start-maximized
+chromium --no-sandbox --start-maximized &
 lxpanel
 EOF
 
