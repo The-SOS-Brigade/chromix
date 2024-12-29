@@ -41,7 +41,7 @@ shutdown -h now
 
 su chromix
 
-mkdir /home/chromix/.config/openbox/autostart
+touch /home/chromix/.config/openbox/autostart
 cat > /home/chromix/.config/openbox/autostart << EOF
 chrome-shutdown.sh
 EOF
