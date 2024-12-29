@@ -29,8 +29,10 @@ systemctl start lightdm
 
 git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 
+mkdir /etc/xdg/openbox/autostart
+
 cat > /etc/xdg/openbox/autostart << EOF
-chromium --no-sandbox --start-maximized
+~/chrome-shutdown.sh
 EOF
 
 cat > /usr/share/applications/chromium-browser.desktop << EOF
@@ -178,11 +180,14 @@ Keywords=browser
 
 EOF
 
-mv chromium chromium.setaside
-cd
-mkdir -p ~/.config/chromium/Default
-echo "{"custom_chrome_frame":true}" > /usr/home/grahamperrin/.config/chromium/Default/Preferences
-chrome
+cat > ~/chrome-shutdown.sh << EOF
+
+chromium --no-sandbox --start-maximized &
+shutdown -h now
+
+EOF
+
+chmod +x ~/chrome-shutdown.sh 
 
 cat > /etc/resolv.conf << EOF
 nameserver 8.8.8.8
