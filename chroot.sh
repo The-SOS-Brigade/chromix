@@ -22,7 +22,7 @@ EOF
 apt update
 apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm-gtk-greeter lightdm -y
+    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm sudo -y
 
 systemctl enable lightdm
 systemctl start lightdm
@@ -39,20 +39,18 @@ git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 chromium --start-maximized
 shutdown -h now
 
-EOF
-
 su chromix
 
-mkdir ~/.config/openbox/autostart
-cat > ~/.config/openbox/autostart << EOF
+mkdir /home/chromix/.config/openbox/autostart
+cat > /home/chromix/.config/openbox/autostart << EOF
 chrome-shutdown.sh
 EOF
 
-cat > ~/chrome-shutdown.sh << EOF 
+cat > /home/chromix/chrome-shutdown.sh << EOF 
 
 chromium --start-maximized
 sudo shutdown -h now
 
 EOF
 
-sudo chmod +x ~/chrome-shutdown.sh 
+sudo chmod +x /home/chromix/chrome-shutdown.sh 
