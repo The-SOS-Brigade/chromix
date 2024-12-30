@@ -39,7 +39,7 @@ git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 su chromix
 
 sudo cat > /etc/xdg/openbox/autostart << EOF
-/home/chromix/chrome-shutdown.sh
+bash /home/chromix/chrome-shutdown.sh
 EOF
 
 cat > /home/chromix/chrome-shutdown.sh << EOF 
@@ -59,20 +59,20 @@ chromium --start-maximized
 sleep 10
 
 # Get the Chromium window ID
-WINDOW_ID=$(xdotool search --onlyvisible --class chromium | head -n 1)
+WINDOW_ID=\$(xdotool search --onlyvisible --class chromium | head -n 1)
 
 if [ -z "\$WINDOW_ID" ]; then
     echo "Chromium not found!"
     exit 1
 fi
 
-echo "Monitoring Chromium window: $WINDOW_ID"
+echo "Monitoring Chromium window: \$WINDOW_ID"
 
 while true; do
     # Get the current window state
-    STATE=$(xprop -id "$WINDOW_ID" _NET_WM_STATE)
+    STATE=\$(xprop -id "\$WINDOW_ID" _NET_WM_STATE)
 
-    if echo "$STATE" | grep -q "_NET_WM_STATE_HIDDEN"; then
+    if echo "\$STATE" | grep -q "_NET_WM_STATE_HIDDEN"; then
         echo "Window minimized. Putting the system to sleep..."
         systemctl suspend
         exit
