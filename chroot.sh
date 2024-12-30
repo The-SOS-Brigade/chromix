@@ -39,11 +39,13 @@ git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 su chromix
 
 sudo cat > /etc/xdg/openbox/autostart << EOF
-/home/chromix/chrome-shutdown.sh
+/home/chromix/chrome-shutdown.sh &
+/home/chromix/chrome-sleep.sh
 EOF
 
 cat > /home/chromix/chrome-shutdown.sh << EOF 
-bash /home/chromix/chrome-sleep.sh
+
+chromium --start-maximized
 sudo shutdown -h now
 
 EOF
@@ -54,14 +56,10 @@ cat > /home/chromix/chrome-sleep.sh << EOF
 
 #!/bin/bash
 
-chromium --start-maximized
-
-sleep 10
-
 # Get the Chromium window ID
 WINDOW_ID=$(xdotool search --onlyvisible --class chromium | head -n 1)
 
-if [ -z "\$WINDOW_ID" ]; then
+if [ -z "$WINDOW_ID" ]; then
     echo "Chromium not found!"
     exit 1
 fi
