@@ -22,7 +22,7 @@ EOF
 apt update
 apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm sudo -y
+    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm sudo xdotool -y
 
 systemctl enable lightdm
 systemctl start lightdm
@@ -39,13 +39,11 @@ git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
 su chromix
 
 sudo cat > /etc/xdg/openbox/autostart << EOF
-/home/chromix/chrome-shutdown.sh &
-/home/chromix/chrome-sleep.sh
+/home/chromix/chrome-shutdown.sh
 EOF
 
 cat > /home/chromix/chrome-shutdown.sh << EOF 
-
-chromium --start-maximized
+bash /home/chromix/chrome-sleep.sh
 sudo shutdown -h now
 
 EOF
@@ -56,10 +54,14 @@ cat > /home/chromix/chrome-sleep.sh << EOF
 
 #!/bin/bash
 
+chromium --start-maximized
+
+sleep 10
+
 # Get the Chromium window ID
 WINDOW_ID=$(xdotool search --onlyvisible --class chromium | head -n 1)
 
-if [ -z "$WINDOW_ID" ]; then
+if [ -z "\$WINDOW_ID" ]; then
     echo "Chromium not found!"
     exit 1
 fi
