@@ -34,11 +34,6 @@ nameserver 10.0.2.3
 
 EOF
 
-git clone https://github.com/pablocorbalann/arch-minimal-wallpapers.git
-
-
-su chromix
-
 curl -L -o /home/chromix/gotty_linux_amd64.tar.gz https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz
 
 tar -xvf /home/chromix/gotty_linux_amd64.tar.gz
@@ -60,7 +55,7 @@ cat > /home/chromix/chrome-sleep.sh << EOF
 
 #!/bin/bash
 chromium --start-maximized &
-../../gotty --permit-write --port 9000 bash
+../../gotty --permit-write --port 9000 bash &
  
 sleep 40
  
