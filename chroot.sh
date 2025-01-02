@@ -2,7 +2,7 @@
 
 export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
-useradd chromix -m -p ""
+useradd -s /bin/bash chromix -m -p "" 
 usermod -aG sudo chromix
 printf "toor\ntoor\n" | passwd
 
@@ -37,7 +37,6 @@ EOF
 curl -L -o /home/chromix/gotty_linux_amd64.tar.gz https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz
 
 tar -xvf /home/chromix/gotty_linux_amd64.tar.gz
-
 
 sudo cat > /etc/xdg/openbox/autostart << EOF
 bash /home/chromix/chrome-shutdown.sh
