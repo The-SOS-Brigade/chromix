@@ -22,7 +22,7 @@ EOF
 apt update
 apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm sudo xdotool tar curl -y
+    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm sudo xdotool tar curl cockpit -y
 
 systemctl enable lightdm
 systemctl start lightdm
@@ -57,8 +57,7 @@ cat > /home/user-files/chrome-sleep.sh << EOF
 chromium --start-maximized &
 /gotty --permit-write --port 9000 bash &
  
-sleep 40
- 
+sleep 40 
 
 #!/bin/bash
 
@@ -90,6 +89,28 @@ while true; do
 
     sleep 1
 done
+EOF
+
+cat > /home/user-files/chrome-bookmarks.sh << EOF
+
+#!/bin/bash
+
+BOOKMARKS_FILE="/home/chromix/.config/chromium/Default/Bookmarks"
+
+# The bookmark data to add (in JSON format)
+NEW_BOOKMARK='{
+  "date_added": "16385394680000000",
+  "id": "1001",
+  "name": "Terminal",
+  "type": "url",
+  "url": "localhost:9000"
+}'
+
+# Append the new bookmark before the closing bracket of the "bookmark_bar" object
+sed -i '/"bookmark_bar": {/a \\
+  '"\$NEW_BOOKMARK" \\
+' "\$BOOKMARKS_FILE"
+
 EOF
 
 chmod +x /home/user-files/chrome-shutdown.sh
