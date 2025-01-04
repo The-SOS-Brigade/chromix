@@ -34,27 +34,28 @@ nameserver 10.0.2.3
 
 EOF
 
-curl -L -o /home/chromix/gotty_linux_amd64.tar.gz https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz
+mkdir -p /home/user-files
 
-tar -xvf /home/chromix/gotty_linux_amd64.tar.gz
+curl -L -o /home/user-files/gotty_linux_amd64.tar.gz https://github.com/yudai/gotty/releases/download/v1.0.1/gotty_linux_amd64.tar.gz
+
+tar -xvf /home/user-files/gotty_linux_amd64.tar.gz
 
 sudo cat > /etc/xdg/openbox/autostart << EOF
-bash /home/chromix/chrome-shutdown.sh
+bash /home/user-files/chrome-shutdown.sh
 EOF
 
-cat > /home/chromix/chrome-shutdown.sh << EOF 
-bash /home/chromix/chrome-sleep.sh
+
+cat > /home/user-files/chrome-shutdown.sh << EOF 
+bash /home/user-files/chrome-sleep.sh
 sudo shutdown -h now
 
 EOF
 
-sudo chmod +x /home/chromix/chrome-shutdown.sh
-
-cat > /home/chromix/chrome-sleep.sh << EOF
+cat > /home/user-files/chrome-sleep.sh << EOF
 
 #!/bin/bash
 chromium --start-maximized &
-../../gotty --permit-write --port 9000 bash &
+/gotty --permit-write --port 9000 bash &
  
 sleep 40
  
@@ -90,3 +91,6 @@ while true; do
     sleep 1
 done
 EOF
+
+chmod +x /home/user-files/chrome-shutdown.sh
+chmod +x /home/user-files/chrome-sleep.sh
