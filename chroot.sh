@@ -22,7 +22,7 @@ EOF
 apt update
 apt install linux-image-6.1.0-20-amd64 network-manager console-setup console-setup-linux pciutils \
     xserver-xorg-video-all xserver-xorg-input-evdev x11-xserver-utils \
-    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm sudo xdotool tar curl cockpit -y
+    x11-xkb-utils x11-utils xinit chromium openbox wmctrl neovim git lightdm sudo xdotool tar curl cockpit jq -y
 
 systemctl enable lightdm
 systemctl start lightdm
@@ -93,25 +93,60 @@ EOF
 
 cat > /home/user-files/chrome-bookmarks.sh << EOF
 
+
 #!/bin/bash
 
-BOOKMARKS_FILE="/home/chromix/.config/chromium/Default/Bookmarks"
+# Path to the Chromium bookmarks file
+BOOKMARKS_FILE="$HOME/.config/chromium/Default/Bookmarks"
 
-# The bookmark data to add (in JSON format)
-NEW_BOOKMARK='{
-  "date_added": "16385394680000000",
-  "id": "1001",
-  "name": "Terminal",
-  "type": "url",
-  "url": "localhost:9000"
-}'
+# Ensure the bookmarks file exists
+if [ ! -f "$BOOKMARKS_FILE" ]; then
+  echo "Error: Chromium bookmarks file not found at $BOOKMARKS_FILE"
+  exit 1
+fi
 
-# Append the new bookmark before the closing bracket of the "bookmark_bar" object
-sed -i '/"bookmark_bar": {/a \\
-  '"\$NEW_BOOKMARK" \\
-' "\$BOOKMARKS_FILE"
+# Backup the original Bookmarks file
+cp "$BOOKMARKS_FILE" "$BOOKMARKS_FILE.bak"
+
+# Define the array of new bookmarks
+NEW_BOOKMARKS='[
+  {
+    "date_added": "16385394680000000",
+    "id": "1001",
+    "name": "Example Bookmark 1",
+    "type": "url",
+    "url": "https://www.example.com"
+  },
+  {
+    "date_added": "16385394680000001",
+    "id": "1002",
+    "name": "Example Bookmark 2",
+    "type": "url",
+    "url": "https://www.anotherexample.com"
+  },
+  {
+    "date_added": "16385394680000002",
+    "id": "1003",
+    "name": "Example Bookmark 3",
+    "type": "url",
+    "url": "https://www.somethingelse.com"
+  }
+]'
+
+# Use jq to replace the bookmark_bar children with the new bookmarks
+if command -v jq >/dev/null 2>&1; then
+  jq --argjson new_bookmarks "$NEW_BOOKMARKS" '
+    .roots.bookmark_bar.children = $new_bookmarks
+  ' "$BOOKMARKS_FILE" > "$BOOKMARKS_FILE.tmp" && mv "$BOOKMARKS_FILE.tmp" "$BOOKMARKS_FILE"
+else
+  echo "Error: jq is not installed. Please install jq and try again."
+  exit 1
+fi
+
+echo "Bookmarks cleared and new bookmarks added successfully. You can now start Chromium."
 
 EOF
 
 chmod +x /home/user-files/chrome-shutdown.sh
 chmod +x /home/user-files/chrome-sleep.sh
+chmod +x /home/user-files/chrome-bookmarks.sh
