@@ -59,7 +59,6 @@ chromium --start-maximized &
  
 sleep 40 
 
-#!/bin/bash
 
 # Get the Chromium window ID
 WINDOW_ID=\$(xdotool search --onlyvisible --class chromium | head -n 1)
