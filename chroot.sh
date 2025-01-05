@@ -97,16 +97,16 @@ cat > /home/user-files/chrome-bookmarks.sh << EOF
 #!/bin/bash
 
 # Path to the Chromium bookmarks file
-BOOKMARKS_FILE="$HOME/.config/chromium/Default/Bookmarks"
+BOOKMARKS_FILE="\$HOME/.config/chromium/Default/Bookmarks"
 
 # Ensure the bookmarks file exists
-if [ ! -f "$BOOKMARKS_FILE" ]; then
-  echo "Error: Chromium bookmarks file not found at $BOOKMARKS_FILE"
+if [ ! -f "\$BOOKMARKS_FILE" ]; then
+  echo "Error: Chromium bookmarks file not found at \$BOOKMARKS_FILE"
   exit 1
 fi
 
 # Backup the original Bookmarks file
-cp "$BOOKMARKS_FILE" "$BOOKMARKS_FILE.bak"
+cp "\$BOOKMARKS_FILE" "\$BOOKMARKS_FILE.bak"
 
 # Define the array of new bookmarks
 NEW_BOOKMARKS='[
@@ -135,9 +135,9 @@ NEW_BOOKMARKS='[
 
 # Use jq to replace the bookmark_bar children with the new bookmarks
 if command -v jq >/dev/null 2>&1; then
-  jq --argjson new_bookmarks "$NEW_BOOKMARKS" '
-    .roots.bookmark_bar.children = $new_bookmarks
-  ' "$BOOKMARKS_FILE" > "$BOOKMARKS_FILE.tmp" && mv "$BOOKMARKS_FILE.tmp" "$BOOKMARKS_FILE"
+  jq --argjson new_bookmarks "\$NEW_BOOKMARKS" '
+    .roots.bookmark_bar.children = \$new_bookmarks
+  ' "\$BOOKMARKS_FILE" > "\$BOOKMARKS_FILE.tmp" && mv "\$BOOKMARKS_FILE.tmp" "\$BOOKMARKS_FILE"
 else
   echo "Error: jq is not installed. Please install jq and try again."
   exit 1
