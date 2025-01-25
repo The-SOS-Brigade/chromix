@@ -1,0 +1,8 @@
+services:
+  builder:
+    image: debian:bookworm
+    volumes:
+      - ./:/chromix
+    command: ./build.sh
+    working_dir: /chromix
+    privileged: true
